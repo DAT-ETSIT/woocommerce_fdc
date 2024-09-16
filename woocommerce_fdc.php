@@ -2,7 +2,7 @@
 /*
 Plugin Name: WooCommerce FDC
 Description: Plugin que envía los detalles del pedido a valiDAT cuando el pedido contiene uno o más vasos.
-Version: 1.0
+Version: 1.1
 Author: Álvaro Rosado González
 Author URI: https://github.com/aLVaRoZz01/
 */
