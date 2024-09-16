@@ -8,7 +8,7 @@ Author URI: https://github.com/aLVaRoZz01/
 */
 
 // Hook para ejecutar la función cuando se completa el pago
-add_action('woocommerce_thankyou', 'enviar_detalles_pedido');
+add_action('woocommerce_checkout_order_processed', 'enviar_detalles_pedido');
 function enviar_detalles_pedido($order_id) {
     // Definir las IDs específicas de los productos que quieres verificar
     $ids_productos_especificos = array(9642, 9703);
