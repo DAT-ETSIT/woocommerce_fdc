@@ -7,21 +7,29 @@ Author: Álvaro Rosado González
 Author URI: https://github.com/aLVaRoZz01/
 */
 
-// Hook para ejecutar la función cuando se completa el pago
-add_action('woocommerce_order_status_processing', 'enviar_detalles_pedido');
+// Hook para ejecutar la función en la página de agradecimiento
+add_action('woocommerce_thankyou', 'enviar_detalles_pedido', 10, 1);
 function enviar_detalles_pedido($order_id) {
+    if (!$order_id) {
+        return;
+    }
+
+    // Verificar si ya se ha ejecutado la acción para evitar repeticiones
+    if (get_post_meta($order_id, '_thankyou_action_done', true)) {
+        return;
+    }
+
     // Definir las IDs específicas de los productos que quieres verificar
     $ids_productos_especificos = array(9642, 9703);
 
     // Obtener el objeto del pedido
     $order = wc_get_order($order_id);
     
-	// Obtener el email del usuario actual
+    // Obtener el email del usuario actual
     $user = wp_get_current_user();
     $user_email = $user->user_email;
 
     $product_found = false;
-
     $cart = [];
     
     foreach ($order->get_items() as $item_id => $item) {
@@ -68,6 +76,8 @@ function enviar_detalles_pedido($order_id) {
             error_log('Detalles del pedido enviados exitosamente.');
         }
     }
-}
 
+    // Marcar la acción como realizada
+    update_post_meta($order_id, '_thankyou_action_done', true);
+}
 ?>
